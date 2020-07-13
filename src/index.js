@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-class App extends React.Component {
+class App extends React.PureComponent {
   state = initialData;
 
   onDragEnd = result => {

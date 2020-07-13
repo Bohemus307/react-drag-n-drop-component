@@ -8,12 +8,23 @@ const Container = styled.div`
   border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? 'lightGreen' : 'white')};
+  background-color: ${props => 
+    props.isDragDisabled // <== sets color of locked card
+    ? 'lightgrey' 
+    : props.isDragging
+     ? 'lightGreen' 
+     : 'white'};
 `;
 export default class Task extends React.Component {
   render() {
+    // to lock card in place use this variable it 
+    const isDragDisabled = this.props.task.id === 'null'
     return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
+      <Draggable 
+        draggableId={this.props.task.id} 
+        index={this.props.index} 
+        isDragDisabled={isDragDisabled}
+      >
         {(provided , snapshot) => (
           <Container
           // these props need to b applied to component that moves
@@ -22,6 +33,7 @@ export default class Task extends React.Component {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
+            isDragDisabled={isDragDisabled}
           >
             {this.props.task.content}
           </Container>
